@@ -3,17 +3,17 @@ function getOperator() {
 
     do {
         sign = prompt('Enter the operator');
-    } while (isOperatorValid(sign));
+    } while (!isOperatorValid(sign));
 
     return sign;
 }
 
 function isOperatorValid(sign) {
     return (
-        (sign !== '+') &&
-        (sign !== '-') &&
-        (sign !== '*') &&
-        (sign !== '/')
+        (sign === '+') ||
+        (sign === '-') ||
+        (sign === '*') ||
+        (sign === '/')
     );
 }
 
@@ -22,15 +22,15 @@ function getNumberOperands(lowerLimit, upperLimit) {
 
     do {
         count = prompt(`Enter number of operands (more ${lowerLimit} and less ${upperLimit})`);
-    } while (isNumberValid(count, lowerLimit, upperLimit));
+    } while (!isNumberValid(count, lowerLimit, upperLimit));
 
     return Number(count);
 }
 
 function isNumberValid(num, lowerLimit, upperLimit) {
     return (
-        !((num > lowerLimit) && (num < upperLimit)) ||
-        isNaN(num)
+        ((num > lowerLimit) && (num < upperLimit)) &&
+        !isNaN(num)
     );
 }
 
@@ -39,13 +39,18 @@ function getOperand(numberIter) {
 
     do {
         operand = prompt(`Enter the operand ${numberIter + 1}`);
-    } while (isOperandValid(operand));
+    } while (!isOperandValid(operand));
 
     return Number(operand);
 }
 
 function isOperandValid(num) {
-    return (!num || (num === '') || (num < 0) || isNaN(num));
+    return (
+        num &&
+        (num !== '') &&
+        (num >= 0) &&
+        !isNaN(num)
+    );
 }
 
 function sum(result, term) {
@@ -99,6 +104,5 @@ function getResultOperation(sign, numberIter) {
 const operator = getOperator();
 const numberOperands = getNumberOperands(1, 6);
 const resultOperation = getResultOperation(operator, numberOperands);
-
 
 alert(resultOperation);
